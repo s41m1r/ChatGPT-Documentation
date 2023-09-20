@@ -1,0 +1,130 @@
+**Developer Version:**
+
+---
+
+## Facebook Graph API: Technical Overview
+
+---
+
+### **1. Introduction:**
+
+The Graph API is Facebook's core tool for data management. It operates over HTTP, supports HTTP/1.1 and mandates HTTPS for all endpoints.
+
+---
+
+### **2. URL & Endpoints:**
+
+- **Base Host URL**: `https://graph.facebook.com/`
+- For video uploads: `https://graph-video.facebook.com/`
+  
+---
+
+### **3. Access Tokens:**
+
+- **Necessity**: Essential for nearly all API endpoints.
+- **Functions**:
+  1. Bypass user passwords while accessing specific user data.
+  2. Identify the calling app, the user, and the data scope.
+
+[Learn More: Access Token Documentation](#)
+
+---
+
+### **4. Nodes:**
+
+- **Definition**: Unique objects, e.g., Users, Pages, Photos, etc.
+- **Example Request**:
+  ```bash
+  curl -i -X GET "https://graph.facebook.com/USER-ID?access_token=ACCESS-TOKEN"
+  ```
+- **Response Format**: JSON. E.g.,
+
+```json
+{
+  "name": "Your Name",
+  "id": "YOUR-USER-ID"
+}
+```
+
+---
+
+### **5. Node Metadata:**
+
+- Fetch fields and their details of a node by appending `metadata=1` parameter.
+- **Example Request**:
+  ```bash
+  curl -i -X GET "https://graph.facebook.com/USER-ID?metadata=1&access_token=ACCESS-TOKEN"
+  ```
+
+---
+
+### **6. Special Nodes - /me:**
+
+Represents the object ID of the user/page corresponding to the active access token.
+
+```bash
+curl -i -X GET "https://graph.facebook.com/me?access_token=ACCESS-TOKEN"
+```
+
+---
+
+### **7. Edges:**
+
+Connections between nodes. A user node might have edges to photos, posts, etc.
+
+```bash
+curl -i -X GET "https://graph.facebook.com/USER-ID/photos?access_token=ACCESS-TOKEN"
+```
+
+---
+
+### **8. Fields:**
+
+Node properties. Define using the `fields` parameter to customize the returned data.
+
+```bash
+curl -i -X GET "https://graph.facebook.com/USER-ID?fields=id,name,email,picture&access_token=ACCESS-TOKEN"
+```
+
+---
+
+### **9. Complex Parameters:**
+
+- **List**: JSON format. E.g., `["firstitem", "seconditem", "thirditem"]`
+- **Object**: JSON format. E.g., `{"firstkey": "firstvalue", "secondKey": 123}`
+
+---
+
+### **10. CRUD Operations:**
+
+- **Create & Update**: Possible with POST operations. Return fields using `fields` parameter.
+- **Delete**: Use DELETE operation on the object ID. Restrictions may apply based on the node type.
+
+---
+
+### **11. Webhooks:**
+
+Register to receive real-time notifications on node changes. [Webhooks Documentation](#)
+
+---
+
+### **12. API Versioning:**
+
+- Quarterly version releases.
+- Specify version with "v" prefix, e.g., `/v4.0/USER-ID/photos`.
+
+[Versioning Guide](#) & [Graph API Changelog](#)
+
+---
+
+### **13. Facebook SDKs & Platforms:**
+
+Leverage Facebook's SDKs and platforms for cross-platform integrations.
+
+---
+
+### **Next Steps**:
+
+Dive deeper with the Graph Explorer tool to explore more advanced API calls and data fetching techniques.
+
+---

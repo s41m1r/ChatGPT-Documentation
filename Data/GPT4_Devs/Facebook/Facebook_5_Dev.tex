@@ -1,0 +1,143 @@
+**Developer Version:**
+
+---
+
+**Facebook Graph API: Technical Overview**
+
+---
+
+**HTTP & HTTPS Requirements:**
+
+- The Graph API adheres to HTTP/1.1 specifications.
+- Ensure all endpoints are accessed over HTTPS.
+- The `includeSubdomains` HSTS directive is active on facebook.com; however, this won't impact your Graph API calls.
+
+---
+
+**Endpoint URL:**
+
+- Primary host URL: `graph.facebook.com`
+- For video uploads use: `graph-video.facebook.com`
+
+---
+
+**Access Tokens:**
+
+- Almost every endpoint requires an access token.
+- Functions:
+  1. Retrieve User data without password.
+  2. Identify your app, its User, and granted permissions.
+
+[Detailed Access Token Documentation](#)
+
+---
+
+**Nodes & Their Data:**
+
+- Nodes are unique objects, e.g., User, Page, Photo.
+- Sample cURL for User node: 
+```bash
+curl -i -X GET "https://graph.facebook.com/USER-ID?access_token=ACCESS-TOKEN"
+```
+- Response:
+```json
+{
+  "name": "Your Name",
+  "id": "YOUR-USER-ID"
+}
+```
+- To fetch metadata for a node:
+```bash
+curl -i -X GET "https://graph.facebook.com/USER-ID?metadata=1&access_token=ACCESS-TOKEN"
+```
+
+---
+
+**Special Endpoint `/me`:**
+
+- Translates to the object ID of the token bearer.
+- Sample cURL:
+```bash
+curl -i -X GET "https://graph.facebook.com/me?access_token=ACCESS-TOKEN"
+```
+
+---
+
+**Edges - Connecting Nodes:**
+
+- Represents connections between nodes.
+- Fetch a User's photos:
+```bash
+curl -i -X GET "https://graph.facebook.com/USER-ID/photos?access_token=ACCESS-TOKEN"
+```
+
+---
+
+**Fields - Defining the Data:**
+
+- Specify required fields using the `fields` parameter.
+- Example, fetch id, name, email, picture:
+```bash
+curl -i -X GET "https://graph.facebook.com/USER-ID?fields=id,name,email,picture&access_token=ACCESS-TOKEN"
+```
+
+---
+
+**Complex Parameters:**
+
+- Parameters can be primitives, lists, or objects.
+- List: `["firstitem", "seconditem", "thirditem"]`
+- Object: `{"firstkey": "firstvalue", "secondKey": 123}`
+
+---
+
+**CRUD Operations:**
+
+- Publishing: Check [Facebook Sharing Guide](#)
+- Updating (e.g., email update):
+```bash
+curl -i -X POST "https://graph.facebook.com/USER-ID?email=YOURNEW@EMAILADDRESS.COM&access_token=ACCESS-TOKEN"
+```
+- Read-after-write support varies per endpoint.
+
+---
+
+**Error Handling:**
+
+- Standard error response for failed reads.
+- [Error Handling Guide](#)
+
+---
+
+**Deletion Operations:**
+
+- Typically, delete nodes you created with:
+```bash
+curl -i -X DELETE "https://graph.facebook.com/PHOTO-ID?access_token=ACCESSS-TOKEN"
+```
+
+---
+
+**Webhooks:**
+
+- Subscribe to webhooks to get notifications of node changes.
+
+---
+
+**API Versioning:**
+
+- Specify the version with "vX.Y" (e.g., `v4.0`) before the endpoint in your request.
+- If unspecified, the oldest available version is used.
+- [Versioning Guide](#) | [Graph API Changelog](#)
+
+---
+
+**Integration Resources:**
+
+- Utilize various APIs, SDKs, and platforms from Facebook for development across platforms.
+
+---
+
+**Getting Started:**
+
+- Dive deeper with the [Graph Explorer tool](#) and experiment with some data-fetching requests.

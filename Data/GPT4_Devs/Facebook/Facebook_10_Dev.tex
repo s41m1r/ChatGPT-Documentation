@@ -1,0 +1,71 @@
+**Developer Version:**
+
+---
+
+### **Facebook Graph API Technical Overview**
+
+#### **HTTP Protocols**
+- Uses HTTP/1.1 standards.
+- Requires HTTPS for all endpoints.
+- Supports any language with an HTTP library (e.g., cURL, urllib).
+- IncludeSubdomains HSTS directive is enabled on facebook.com but won't impact API calls.
+
+#### **Endpoint URLs**
+- Standard requests: `graph.facebook.com`
+- Video uploads: `graph-video.facebook.com`
+
+#### **Authentication: Access Tokens**
+- Essential for most Graph API endpoints.
+- Functions:
+  1. Retrieve user data without needing their password.
+  2. Identify the app, user, and data access permissions.
+- Refer to access token documentation for implementation details.
+
+#### **Data Structures**
+1. **Nodes**: Individual objects with unique IDs (e.g., Users, Pages, Posts).
+   - Example request: 
+     ```bash
+     curl -i -X GET "https://graph.facebook.com/USER-ID?access_token=ACCESS-TOKEN"
+     ```
+   - Use `metadata=1` parameter for field details.
+  
+2. **Edges**: Connections between nodes (e.g., User's photos).
+   - Example request: 
+     ```bash
+     curl -i -X GET "https://graph.facebook.com/USER-ID/photos?access_token=ACCESS-TOKEN"
+     ```
+
+3. **Fields**: Properties of nodes. Specify desired fields using the `fields` parameter.
+   - Example request: 
+     ```bash
+     curl -i -X GET "https://graph.facebook.com/USER-ID?fields=id,name,email,picture&access_token=ACCESS-TOKEN"
+     ```
+
+4. **Parameters**:
+   - List type in JSON: `["item1", "item2"]`
+   - Object type in JSON: `{"key1": "value1", "key2": 123}`
+
+#### **CRUD Operations**
+- Create, Update: Some nodes (e.g., email) allow field updates using POST.
+- Read-After-Write: Obtain data immediately after publishing/updating. Use `fields` parameter for specific field details.
+- Delete: Typically use DELETE on object ID. Restrictions might apply based on node type.
+
+#### **Error Handling**
+- Standard error responses on read failure.
+- Refer to Handling Errors guide.
+
+#### **Webhooks**
+- Real-time notifications for node changes/interactions.
+- Check out the Webhooks documentation.
+
+#### **API Versioning**
+- Quarterly version releases. Prefix with 'v' in API call.
+- Always specify the version to avoid defaulting to the oldest.
+
+#### **Further Resources**
+- Delve into other Facebook platforms: APIs, SDKs.
+- **Action Item**: Familiarize yourself with the Graph Explorer tool for hands-on experience with the Facebook Social Graph.
+
+---
+
+Note: This version is adapted with a technical audience in mind, focusing on implementation details and technical specifications.

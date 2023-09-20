@@ -1,0 +1,61 @@
+## Developer Version:
+
+**Euronym: Multi-Scale Web Mapping Labels for Europe**
+
+Euronym facilitates dynamic label placement on web maps. It optimally scales the density, selection, and size of labels according to zoom levels and label significance, making it especially useful for web mapping applications focusing on Europe.
+
+---
+
+#### **Core Components**
+
+1. **Label Placement Algorithm**: Implements an algorithm ensuring efficient positioning of labels. See the official [Wikipedia](https://en.wikipedia.org/wiki/Automatic_label_placement) documentation for a detailed understanding of this algorithm.
+
+2. **Integration with Gridviz**: Euronym is incorporated in the [Gridviz](https://github.com/eurostat/gridviz/blob/master/docs/reference.md#showing-labels) library. Check out this [practical example](https://eurostat.github.io/gridviz/examples/labels_.html) for an illustration.
+
+3. **API Details**: 
+    * **Base URL**: `https://raw.githubusercontent.com/euronym/Nuts2json/master/pub/v2`
+    
+    **URL Structure**: `/<ENCODING>/<RESOLUTION>/<GEO>.csv`
+    * Example: [`https://raw.githubusercontent.com/eurostat/euronym/main/pub/v2/UTF/100/LU.csv`](https://raw.githubusercontent.com/eurostat/euronym/main/pub/v2/UTF/100/LU.csv)
+
+    **Parameters**:
+        - `ENCODING`: Choose between `UTF` (default) and `ASCII`.
+        - `RESOLUTION`: Set as `20`, `50`, `100`, or `200` m/pixel. More labels are required for smaller resolutions, increasing file size.
+        - `GEO`: Geographical entity code. Use `EUR` for the entire dataset. Check [this directory](https://github.com/eurostat/euronym/tree/main/pub/v2/UTF/20) for more GEO codes.
+
+4. **CSV Format & Data Points**: 
+    * `name`: Place name to be labeled on the map.
+    * `lon` & `lat`: Longitude and Latitude respectively, in ETRS89 ([EPSG 4258](https://spatialreference.org/ref/epsg/etrs89/)). For most applications, this can be equated with WGS84.
+    * `rs` & `r1`: Label size regulators based on resolution. Labels are hidden for resolutions above `rs`, displayed at `1em` size between `rs` and `r1`, and at `1.5em` size above `r1`.
+
+5. **Input Data & Processing**:
+    * **Data Sources**: 
+        - [EuroRegionalMap](https://eurogeographics.org/maps-for-europe/euroregionalmap/) from EuroGeographics.
+        - [European commission town names table](https://ec.europa.eu/regional_policy/en/information/maps/urban-centres-towns).
+    
+    * **Processing Workflow**: Refer to the transformation process available [here](https://github.com/eurostat/euronym/tree/main/src/). It relies on the [GeoTools library](https://www.geotools.org).
+
+6. **Deployment**:
+    * To deploy your version of Euronym, clone the repository and host the `pub` folder on your web server. Replace the base URL with your server path, like `https://www.mydomain.eu/path/to/pub/v2`.
+
+---
+
+#### **About & Contribution**
+
+* **Contributors**: Primary contribution by [jgaffuri](https://github.com/jgaffuri).
+* **Version**: 2
+* **Active Since**: 2022
+* **License**: Labels are licensed under [EuroGeographics Open Data Licence](https://www.mapsforeurope.org/licence). The code falls under [EUPL 1.2](https://github.com/eurostat/Nuts2json/blob/master/LICENSE).
+
+**Support & Further Development**: 
+Developers can raise issues or seek support [here](https://github.com/eurostat/euronym/issues/new). Contributions via forking or starring are always welcomed. Always remember to provide proper attribution, as mentioned in the copyright section.
+
+---
+
+#### **Disclaimer**
+
+The maps and labels provided by Euronym do not signify any legal or political stance by the European Union on the territories represented. The designation of regions like Kosovo and Palestine follow international regulations and norms, as indicated. Always consult the original documents for full disclaimer details.
+
+---
+
+For a more detailed integration guide and understanding, developers are encouraged to explore the source code, algorithm implementation, and the dataset transformation process.

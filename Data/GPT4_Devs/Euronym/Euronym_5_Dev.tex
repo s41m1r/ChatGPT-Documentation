@@ -1,0 +1,90 @@
+**Developer Version: Euronym Documentation**
+
+---
+
+### **Introduction**
+Euronym provides place name labels optimized for multi-scale web mapping applications, primarily focusing on Europe. The foundation of the tool lies in its advanced label placement algorithm, which adjusts label density, selection, and size as per the zoom level and importance of the label.
+
+![Overview](/docs/overview.gif)
+*Euronym in Action! [View example](https://eurostat.github.io/gridviz/examples/labels_.html)*
+
+---
+
+### **Technical Integration**
+
+**API Endpoint Details:**
+
+- **Base URL:** `https://raw.githubusercontent.com/euronym/Nuts2json/master/pub/v2`
+
+  *You can also deploy your own version of Euronym. For that, clone the repository and publish the `pub` folder on your own web server.*
+
+- **URL Pattern:** `/<ENCODING>/<RESOLUTION>/<GEO>.csv`
+
+  *Example: [UTF Data, Resolution 100m/pixel, Luxembourg](https://raw.githubusercontent.com/eurostat/euronym/main/pub/v2/UTF/100/LU.csv)*
+
+**API Parameters:**
+
+| Parameter | Values | Details |
+| ------------- | ------------- |-------------|
+| `ENCODING` | `UTF` `ASCII` | Default encoding is `UTF`. Choose based on your application's needs. |
+| `RESOLUTION` | `20` `50` `100` `200` | Determines the resolution for visualization, expressed in *m/pixel*. Lower values bring in more labels, increasing the file size. |
+| `GEO` | Varied choices, like [this](https://github.com/eurostat/euronym/tree/main/pub/v2/UTF/20). `EUR` covers the entire dataset. | Geographic entity code. |
+
+For advanced parameter queries, raise an [issue here](https://github.com/eurostat/euronym/issues/new).
+
+---
+
+### **File Format**
+
+Euronym returns data in the CSV format. Developers should look out for these columns:
+
+| Column | Purpose |
+| ------------- | ------------- |
+| `name` | Actual text for the place label to be displayed. |
+| `lon` & `lat` | Longitude and latitude respectively. Expressed in ETRS89 (Comparable to WGS84). |
+| `rs` & `r1` | These indicate resolutions (in *m/pixel*). Labels get different sizes based on these values. |
+| `cc` | Country code, useful when `GEO` is `EUR`. Facilitates country-based filtering. |
+
+**Understanding Resolutions**:
+- **Above *rs***: The label is hidden.
+- **Between *rs* and *r1***: Display label at *1em* size.
+- **Above *r1***: Display label at *1.5em* size (larger view).
+
+---
+
+### **Data Source and Transformation**
+
+Euronym operates on these core datasets:
+
+1. [EuroRegionalMap](https://eurogeographics.org/maps-for-europe/euroregionalmap/) by [EuroGeographics](https://eurogeographics.org/)
+2. [European commission town names table](https://ec.europa.eu/regional_policy/en/information/maps/urban-centres-towns)
+
+Developers curious about the transformation logic can explore [here](https://github.com/eurostat/euronym/tree/main/src/). The process heavily uses the [GeoTools library](https://www.geotools.org).
+
+---
+
+### **Deployment & Customization**
+
+For those wanting a stable, custom version of Euronym, you need to:
+
+1. Clone the repository: `git clone <repository_url>`
+2. Publish the `pub` folder on a web server.
+3. Use the new base URL, say `https://www.mydomain.eu/path/to/pub/v2`, to access the service.
+
+This method allows cherry-picking only necessary API elements.
+
+---
+
+### **Additional Resources & Help**
+
+- Main Contributor: [jgaffuri](https://github.com/jgaffuri)
+- Version: 2 (Since 2022)
+- Licensing: Code is under [EUPL 1.2](https://github.com/eurostat/Nuts2json/blob/master/LICENSE). Other data requires adherence to [EuroGeographics Open Data Licence](https://www.mapsforeurope.org/licence).
+
+If you face any technical hurdles, want to contribute, or appreciate the project, visit [Euronym's GitHub](https://github.com/eurostat/euronym/issues/new).
+
+**Copyright & Disclaimer**: Developers must be aware of copyright concerns, especially when using the EuroGeographics dataset. Detailed notices, including geopolitical clarifications, are provided in the original documentation.
+
+---
+
+*End of Developer Version Documentation.*

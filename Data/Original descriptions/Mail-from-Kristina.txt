@@ -1,0 +1,22 @@
+Hey Jenni, Saimir, 
+
+Attached you will find my ideas for the first 4 documentations, I  attached also the original text as a file: 
+1. Facebook API => technical document
+	https://developers.facebook.com/docs/graph-api/overview?locale=en_US
+2. Euronym Eurostat => technical document
+	https://github.com/eurostat/euronym/blob/main/README.md
+3. Pandas Dataframe => this is a really technical documentation. I am wondering how CHatGPT will create a business explanation out of it => technical document
+	https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html
+4. Amazon S3 Bucket Documentation => original document: not really technical 
+	https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingBucket.html
+
+
+If you have any further ideas regarding more documentation snippets or feedback regarding the first 4 ideas, please let me know.
+
+I am starting the literature review based on the following ideas we had on Tuesday: 
+- Main approaches for documentation (business and technical) in software development
+- Is there any standardization possible ?
+
+P.S: All text files are working with chatgpt (they have the correct length)
+Best, 
+Kristina 

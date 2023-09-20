@@ -1,0 +1,113 @@
+**Developer Version:**
+
+---
+
+# Euronym Developer Documentation
+
+Welcome to Euronym! This documentation is curated specifically for developers, providing you in-depth information about the tool, its design, and its components. Get familiarized with the API calls, understand the data transformation processes, and learn how to deploy your version.
+
+---
+
+## Overview
+
+Euronym provides dynamically placed labels for multi-scale web mapping applications focused on Europe. These labels are generated through an advanced [label placement algorithm](https://en.wikipedia.org/wiki/Automatic_label_placement) that tweaks the density, size, and selection based on zoom levels and label significance.
+
+![Euronym Overview](/docs/overview.gif)
+
+Euronym's integration is exemplified in the [Gridviz library](https://github.com/eurostat/gridviz/blob/master/docs/reference.md#showing-labels). 
+
+---
+
+## API Details
+
+**Base URL:** 
+`https://raw.githubusercontent.com/euronym/Nuts2json/master/pub/v2`
+
+You have the flexibility to define your [own base URL](#own-deployment). 
+
+**URL Pattern:**
+`/<ENCODING>/<RESOLUTION>/<GEO>.csv`
+
+Example:
+[`https://raw.githubusercontent.com/eurostat/euronym/main/pub/v2/UTF/100/LU.csv`](https://raw.githubusercontent.com/eurostat/euronym/main/pub/v2/UTF/100/LU.csv)
+
+### Parameters
+
+| Parameter   | Supported values | Technical Description                                     |
+|-------------|------------------|------------------------------------------------------------|
+| `ENCODING`  | `UTF` `ASCII`    | Data encoding method. Preferably set to `UTF`.             |
+| `RESOLUTION`| `20` `50` `100` `200` | Zoom level in m/pixel. Smaller values increase label density and data size. |
+| `GEO`       | Reference: [here](https://github.com/eurostat/euronym/tree/main/pub/v2/UTF/20) | Code for the geographic entity. `EUR` stands for the entire dataset. |
+
+For any additional parameter details, raise an [issue here](https://github.com/eurostat/euronym/issues/new).
+
+---
+
+## Data Format & Resolution Logic
+
+The returned data will be in a CSV format with these columns:
+
+| Column | Technical Description |
+|--------|-----------------------|
+| `name` | Map label text.       |
+| `lon`  | Longitude (ETRS89).   |
+| `lat`  | Latitude (ETRS89).    |
+| `rs`   | Label display threshold resolution. |
+| `r1`   | Label exaggeration threshold resolution. |
+| `cc`   | Country code for `GEO=EUR`. Useful for filtering. |
+
+Resolutions (*m/pixel*): 
+- Above *rs*: Label won't display.
+- Within [*rs*, *r1*]: Label shows in *1em* size.
+- Above *r1*: Label displays in *1.5em* size.
+
+Note: Longitude and latitude follow the ETRS89 ([EPSG 4258](https://spatialreference.org/ref/epsg/etrs89/)) format, essentially identical to WGS84.
+
+---
+
+## Data Transformation
+
+Euronym leverages these datasets:
+- [EuroRegionalMap](https://eurogeographics.org/maps-for-europe/euroregionalmap/)
+- [European commission town names table](https://ec.europa.eu/regional_policy/en/information/maps/urban-centres-towns)
+
+To understand the transformation process, explore the [codebase](https://github.com/eurostat/euronym/tree/main/src/) built on the [GeoTools library](https://www.geotools.org).
+
+---
+
+## Own Deployment
+
+For your bespoke deployment:
+
+1. Execute `git clone` for the repository.
+2. Publish the `pub` directory on your web server folder.
+3. Access using your base URL (e.g., `https://www.mydomain.eu/path/to/pub/v2`).
+
+By this method, you can tailor the API elements to your requirements.
+
+---
+
+## Additional Information
+
+- **Main Contributors:** ![Julien Gaffuri](https://github.com/jgaffuri.png)
+- **Version:** 2
+- **Active Since:** 2022
+- **Licences:** [EuroGeographics Open Data Licence](https://www.mapsforeurope.org/licence), [EUPL 1.2](https://github.com/eurostat/Nuts2json/blob/master/LICENSE) for the code.
+
+---
+
+## Support & Collaboration
+
+Your input is vital. To seek support or suggest improvements, raise an [issue](https://github.com/eurostat/euronym/issues/new). You're also welcome to fork and contribute.
+
+---
+
+## Copyright & Disclaimer
+
+Review the original documentation for details on copyright and the datasets' licensing terms.
+
+Please be aware of geopolitical sensitivities; the tool does not represent any political stance or boundary definition.
+
+---
+
+Your journey begins here. Dive deep, and happy coding!

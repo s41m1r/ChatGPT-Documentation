@@ -1,0 +1,117 @@
+**Developer Version**:
+
+---
+
+**Facebook Graph API Technical Documentation** 
+
+---
+
+**Introduction**:  
+The Graph API is a core component for interfacing with Facebook's platform. It uses an HTTP-based structure, compliant with HTTP/1.1 standards and mandates HTTPS for all endpoints. Given its HTTP foundation, you can work with it using any language that offers an HTTP library (e.g., cURL, urllib).
+
+**Endpoint Specifications**:
+- **Host URL**: Mainly, utilize `graph.facebook.com`. For video uploads, switch to `graph-video.facebook.com`.
+- **HTTP Library Compatibility**: Ideal for languages like cURL and urllib. 
+
+---
+
+**Access Tokens**:
+- **Role**: They act as authentication keys for your app. Nearly every endpoint will demand one.
+  1. Access a User's data without needing the User's password.
+  2. Identify the app, User, and the scope of data the app can access.
+- **Further Reading**: Check the detailed token documentation for deeper insights.
+
+---
+
+**Working with Nodes**:
+- **Definition**: A node symbolizes an individual entity with a distinct ID, e.g., User, Page, Photo.
+- **Querying a Node**:  
+  ```bash
+  curl -i -X GET "https://graph.facebook.com/USER-ID?access_token=ACCESS-TOKEN"
+  ```
+- **Metadata Fetching**: You can extract detailed information about a node's fields using:
+  ```bash
+  curl -i -X GET "https://graph.facebook.com/USER-ID?metadata=1&access_token=ACCESS-TOKEN"
+  ```
+
+---
+
+**Special Endpoints**:
+- **/me Node**: Represents the ID of the individual or Page using the access token.
+  ```bash
+  curl -i -X GET "https://graph.facebook.com/me?access_token=ACCESS-TOKEN"
+  ```
+
+---
+
+**Edges**:
+- **Definition**: Edges are connections or relationships between two nodes.
+- **Example**: To retrieve a user's published photos:
+  ```bash
+  curl -i -X GET "https://graph.facebook.com/USER-ID/photos?access_token=ACCESS-TOKEN"
+  ```
+
+---
+
+**Fields**:
+- **Definition**: Fields are properties of nodes.
+- **Custom Field Requests**: Override default return fields using the `fields` parameter:
+  ```bash
+  curl -i -X GET "https://graph.facebook.com/USER-ID?fields=id,name,email,picture&access_token=ACCESS-TOKEN"
+  ```
+
+---
+
+**Handling Parameters**:
+- **List Type**: Use JSON syntax: `["item1", "item2"]`.
+- **Object Type**: Use JSON syntax: `{"key1": "value1", "key2": "value2"}`.
+
+---
+
+**CRUD Operations**:
+- **Publishing**: Consult the Facebook Sharing guide.
+- **Updating**: Example to modify the email field:
+  ```bash
+  curl -i -X POST "https://graph.facebook.com/USER-ID?email=NEW@EMAIL.COM&access_token=ACCESS-TOKEN"
+  ```
+- **Deleting**: Typically, you can remove nodes you've created. Example:
+  ```bash
+  curl -i -X DELETE "https://graph.facebook.com/NODE-ID?access_token=ACCESS-TOKEN"
+  ```
+
+---
+
+**Read-After-Write**:
+Some endpoints support immediate read operations post publishing or updating. By default, only the object's ID is returned, but you can request more:
+```bash
+curl -i -X POST "https://graph.facebook.com/PAGE-ID/feed?message=Hello&fields=created_time,from,id,message&access_token=ACCESS-TOKEN"
+```
+
+---
+
+**Error Handling**:
+A standard error response will be issued for failed reads. Check the Handling Errors guide for in-depth information.
+
+---
+
+**Webhooks**:
+Stay updated on changes by subscribing to webhooks.
+
+---
+
+**API Versioning**:
+- **Usage**: Append "v" followed by the version number at the start of the request path, e.g., `v4.0`.
+- **Recommendation**: Always specify the version to avoid defaulting to the oldest version.
+- **Additional Resources**: Consult the Versioning guide and Graph API Changelog.
+
+---
+
+**Related Tools**:
+Harness the full power of Facebook's ecosystem with its range of APIs, SDKs, and platforms.
+
+---
+
+**What's Next?**:  
+Dive deeper by utilizing the Graph Explorer tool. Test real-world scenarios to fetch and manipulate data.
+
+---

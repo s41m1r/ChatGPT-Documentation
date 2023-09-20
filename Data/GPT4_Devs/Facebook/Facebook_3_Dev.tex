@@ -1,0 +1,76 @@
+**Developer Version:**
+
+---
+
+**Graph API for Facebook - Technical Documentation**
+
+**Overview:**
+The Graph API lets developers interface with the Facebook platform. It's constructed on the foundation of a "social graph" concept and uses an HTTP-based approach. With it, developers can carry out various tasks, including querying, posting, and managing ads. Nodes, edges, and fields are core components of the Graph API.
+
+**HTTP Specifications:**
+- **Protocol:** Conforms to HTTP/1.1
+- **Security:** Endpoints are HTTPS-only. 
+- **HSTS directive:** 'includeSubdomains' has been enabled on facebook.com but shouldn’t interfere with your Graph API operations.
+
+**Endpoints:**
+- Primary: `graph.facebook.com`
+- Exception: Video uploads use `graph-video.facebook.com`.
+
+**Authentication via Access Tokens:**
+- Almost every endpoint necessitates an access token.
+- Functions:
+  1. Eliminates the need for user passwords when accessing specific user info.
+  2. Identification mechanism for apps, user identity, and data permissions.
+
+**Nodes:**
+- Represents unique objects with IDs. e.g., Users, Pages, Posts, etc.
+- Retrieve a User node with the following cURL:
+```bash
+curl -i -X GET "https://graph.facebook.com/USER-ID?access_token=ACCESS-TOKEN"
+```
+- Metadata for nodes can be fetched by appending `metadata=1` parameter.
+
+**Special Node: /me**
+- Represents the object ID of the authenticated person or Page making the API calls.
+  
+**Edges:**
+- Represents connections between nodes.
+- Fetch photos linked to a User:
+```bash
+curl -i -X GET "https://graph.facebook.com/USER-ID/photos?access_token=ACCESS-TOKEN"
+```
+
+**Fields:**
+- Specific properties of nodes.
+- Fields can be customized in requests using the `fields` parameter. By default, object IDs are always returned.
+  
+**Complex Parameters:**
+- Support for `list` and `object` types using JSON syntax.
+
+**CRUD Operations:**
+- Use POST operations to publish or update node fields.
+- Read-After-Write: Immediately read data after publishing/updating using the `fields` parameter.
+- Delete nodes with DELETE operations:
+```bash
+curl -i -X DELETE "https://graph.facebook.com/PHOTO-ID?access_token=ACCESS-TOKEN"
+```
+
+**Webhooks:**
+- Subscribe to webhooks to get updates on nodes or interactions.
+
+**API Versions:**
+- Released quarterly. Specify versions in calls with `v` followed by the version number.
+- Always include a version to avoid defaults to the oldest version.
+
+**Errors:**
+- Standardized error responses provided. For a comprehensive guide, refer to Handling Errors.
+
+**SDKs & Platforms:**
+Facebook provides multiple APIs, SDKs, and platforms for various development needs.
+
+**Recommendation for First-time Developers:**
+For hands-on practice, use the Graph Explorer tool to interact with the Facebook Social Graph.
+
+---
+
+This version focuses on a more technical perspective, shedding light on the nitty-gritty details that would be essential for developers wanting to integrate or modify the Graph API in their applications.

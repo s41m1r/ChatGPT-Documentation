@@ -1,0 +1,79 @@
+Sure! Below are the adapted versions of the provided Euronym documentation for the defined audiences.
+
+---
+
+### Developer Version:
+
+#### Euronym
+
+Euronym is a dynamic label placement system specifically tailored for multi-scale web mapping applications in Europe. Through a sophisticated [label placement algorithm](https://en.wikipedia.org/wiki/Automatic_label_placement), it ensures that labels dynamically adjust in terms of density, selection, and size based on zoom levels and their significance.
+
+![Euronym in Action](/docs/overview.gif)
+
+#### Integration:
+For developers looking to leverage Euronym's capabilities, it's embedded in the [Gridviz](https://github.com/eurostat/gridviz/blob/master/docs/reference.md#showing-labels) library. An implementation [example is available here](https://eurostat.github.io/gridviz/examples/labels_.html).
+
+#### API Details:
+
+- **Base URL:** `https://raw.githubusercontent.com/euronym/Nuts2json/master/pub/v2`
+- **URL Pattern:** `/<ENCODING>/<RESOLUTION>/<GEO>.csv`
+  
+For specific use cases, a custom base URL can be set up as explained [here](#own-deployment).
+
+##### Parameters:
+
+| Parameter | Values | Description |
+| ------------- | ------------- |-------------|
+| `ENCODING` | `UTF`, `ASCII` | Preferred encoding. Default is `UTF`. |
+| `RESOLUTION` | `20`, `50`, `100`, `200` | Determines the zoom level of the visualization in *m/pixel*. Smaller values result in denser labels and larger file size. |
+| `GEO` | Multiple options available. `EUR` covers the entire dataset. | Geographic entity code. |
+
+For extended parameters or more granular controls, please [open an issue here](https://github.com/eurostat/euronym/issues/new).
+
+#### Data Format:
+The data is structured in a CSV format:
+
+| Column | Purpose |
+| ------------- | ------------- |
+| `name` | Text to be displayed on the map. |
+| `lon` & `lat` | Geographical coordinates (in ETRS89 or WGS84 format). |
+| `rs` & `r1` | Resolution boundaries for display adjustments. |
+| `cc` | Country code when `GEO` is set to `EUR` for country-based filtering. |
+
+Developers should note:
+- Resolutions are *m/pixel* - representing pixel size in ground meters.
+- Based on *rs* and *r1*:
+  - Labels shouldn't display for resolutions above *rs*.
+  - Between *rs* and *r1*, labels display at *1em* size.
+  - Above *r1*, labels display at an exaggerated *1.5em* size.
+
+#### Dependencies:
+Euronym's functionality banks on these datasets:
+- [EuroRegionalMap](https://eurogeographics.org/maps-for-europe/euroregionalmap/)
+- [European commission town names table](https://ec.europa.eu/regional_policy/en/information/maps/urban-centres-towns)
+
+The code transformation process is delineated [here](https://github.com/eurostat/euronym/tree/main/src/), which heavily utilizes the [GeoTools library](https://www.geotools.org).
+
+#### Deployment:
+For a custom Euronym deployment:
+1. Clone the repository: `git clone [repository-link]`
+2. Publish the `pub` directory on your preferred web server.
+3. Replace the base URL with your domain, e.g., `https://www.mydomain.eu/path/to/pub/v2`.
+
+This allows the customization of API elements as per your requirements.
+
+#### Version:
+2.0
+
+#### Licensing:
+The code is under the [EUPL 1.2 license](https://github.com/eurostat/Nuts2json/blob/master/LICENSE). Always ensure the inclusion of the **© EuroGeographics 2022** attribution when using the EuroRegionalMap dataset.
+
+#### Support & Contribution:
+For technical inquiries, debugging, or enhancement suggestions, please [open an issue](https://github.com/eurostat/euronym/issues/new). You're also encouraged to fork or star the project.
+
+#### Copyright & Disclaimer:
+Input datasets have their own copyrights. Users must ensure compliance, especially when using the [EuroRegionalMap dataset](https://eurogeographics.org/maps-for-europe/euroregionalmap/). The maps and representations are not endorsements by the European Union regarding the legal status of any entity.
+
+--- 
+
+For the non-developer audience, the documentation would be more focused on its usability and purpose rather than the technical intricacies. If you would like an adapted version for a non-developer audience, please let me know.

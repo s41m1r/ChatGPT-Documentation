@@ -1,0 +1,77 @@
+**Developer Version:**
+
+---
+
+### **Facebook Graph API Overview for Developers**
+
+#### **API Communication**
+- **Protocol**: HTTP/1.1 
+- **Security**: HTTPS required for all endpoints.
+- **HTTP libraries**: Any language with an HTTP library (e.g., cURL, urllib) can interact with the Graph API.
+  
+#### **Host URL**
+- **Standard Endpoint**: `graph.facebook.com`.
+- **Video Endpoint**: `graph-video.facebook.com`.
+
+#### **Access Tokens**
+- **Purpose**:
+  - Retrieve user data without needing the user's password.
+  - Authenticate and authorize apps.
+- All Graph API endpoints typically require an access token.
+- Learn about token creation and management [here](#).
+
+#### **Data Structure**
+1. **Nodes**:
+   - Represents objects like Users, Pages, Photos, etc.
+   - Unique ID associated.
+   - Example Call: `https://graph.facebook.com/USER-ID?access_token=ACCESS-TOKEN`
+   - Metadata: `https://graph.facebook.com/USER-ID?metadata=1&access_token=ACCESS-TOKEN`
+
+2. **Edges**:
+   - Represents the connection between two nodes.
+   - Example: Fetching photos connected to a user.
+   - Example Call: `https://graph.facebook.com/USER-ID/photos?access_token=ACCESS-TOKEN`
+
+3. **Fields**:
+   - Represents properties of nodes.
+   - Default fields can be overridden with the `fields` parameter.
+   - Example Call: `https://graph.facebook.com/USER-ID?fields=id,name,email,picture&access_token=ACCESS-TOKEN`
+
+4. **Special Nodes**:
+   - `/me` endpoint: Represents the ID of the currently authenticated user or page.
+   
+#### **Complex Parameters**
+- **List Type**: JSON syntax like `["firstitem", "seconditem", "thirditem"]`.
+- **Object Type**: JSON syntax like `{"firstkey": "firstvalue", "secondKey": 123}`.
+
+#### **Data Operations**
+1. **Publishing**: Use the Facebook Sharing guide.
+2. **Updating**: Use POST requests to nodes.
+   - Example: Updating an email would be: `https://graph.facebook.com/USER-ID?email=YOURNEW@EMAILADDRESS.COM&access_token=ACCESS-TOKEN`
+3. **Reading after Writing**: Immediate retrieval of data after create/update operations. 
+   - Must specify the fields you want in the response.
+   - Example Call: `https://graph.facebook.com/PAGE-ID/feed?message=Hello&fields=created_time,from,id,message&access_token=ACCESS-TOKEN`
+4. **Deleting**: Use DELETE operation on node's object ID.
+   - Typically, you can only delete nodes you created.
+   - Example Call: `https://graph.facebook.com/PHOTO-ID?access_token=ACCESS-TOKEN`
+
+#### **Webhooks**
+- Get real-time notifications of changes or interactions with nodes.
+- Refer to the Webhooks documentation [here](#).
+
+#### **API Versions**
+- Quarterly API version releases.
+- Specify version by adding "v" followed by version number to the request path.
+- Default version is the oldest available if not specified.
+- Check the Versioning guide and Graph API Changelog.
+
+#### **Integration**
+- Utilize Facebook's range of APIs, SDKs, and platforms for more extensive development.
+
+#### **Next Steps**
+1. Familiarize yourself with the Graph Explorer tool.
+2. Run test requests to get accustomed to data retrieval.
+
+---
+
+*Note: This developer version emphasizes technical specifications and call-to-action for developers to dive deep into the Graph API's functionalities.*

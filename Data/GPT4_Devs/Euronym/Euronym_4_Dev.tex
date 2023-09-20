@@ -1,0 +1,49 @@
+Certainly! Let's adapt the provided documentation for two different audiences:
+
+### Developer Version:
+
+**Euronym: Place Name Labels for Web Mapping Applications**
+
+**Purpose:** Offer detailed insight into Euronym's underlying mechanisms to aid in code modification, deployment, and understanding.
+
+**Technical Overview:**
+
+- **Label Placement Algorithm**: Euronym utilizes a dynamic [label placement algorithm](https://en.wikipedia.org/wiki/Automatic_label_placement) to manage label density, selection, and size based on the zoom level and label significance. 
+
+- **Integration with Gridviz**: Gridviz, a mapping library, incorporates Euronym. Here's an in-depth [example](https://eurostat.github.io/gridviz/examples/labels_.html).
+
+- **API Details**:
+  - **Base URL**: `https://raw.githubusercontent.com/euronym/Nuts2json/master/pub/v2`. 
+  - **URL Pattern**: `/<ENCODING>/<RESOLUTION>/<GEO>.csv`
+  - For hands-on experimentation, access [this link](https://raw.githubusercontent.com/eurostat/euronym/main/pub/v2/UTF/100/LU.csv).
+  - **Parameters**:
+    - `ENCODING`: Choose between `UTF` or `ASCII` encodings. 
+    - `RESOLUTION`: Specify the visualization's zoom level (in *m/pixel*).
+    - `GEO`: Code of the geographic entity. Check [here](https://github.com/eurostat/euronym/tree/main/pub/v2/UTF/20) for potential values.
+
+- **File Format**: CSV containing columns like name (place name text), longitude, latitude, and resolution details (e.g., `rs`, `r1`).
+
+- **Data Dependencies**:
+  - Euronym employs datasets like [EuroRegionalMap](https://eurogeographics.org/maps-for-europe/euroregionalmap/) and the [European commission town names table](https://ec.europa.eu/regional_policy/en/information/maps/urban-centres-towns).
+  - The transformation process is implemented using the [GeoTools library](https://www.geotools.org). Explore the code [here](https://github.com/eurostat/euronym/tree/main/src/).
+
+- **Deployment**:
+  - To deploy your custom version of Euronym, use the `git clone` command on the repository. Subsequently, publish the `pub` folder to your web server. Access the service using your new base URL.
+
+**Contributors**: Significant contributions made by [jgaffuri](https://github.com/jgaffuri). Version: 2.
+
+**Licensing**:
+- Map data: Adhere to the [EuroGeographics Open Data Licence](https://www.mapsforeurope.org/licence).
+- Code: Governed by [EUPL 1.2](https://github.com/eurostat/Nuts2json/blob/master/LICENSE).
+
+**Support and Contribution**:
+- Developers can seek [support here](https://github.com/eurostat/euronym/issues/new), fork the project, or star it to show appreciation.
+
+**Copyright**:
+- Adherence to **© EuroGeographics 2022** attribution is mandatory.
+
+**Disclaimer**: Always respect the boundaries and designations on these maps. They do not reflect any political stance of the European Union.
+
+---
+
+**Note**: The original documentation is comprehensive and well-structured for general users. This adapted version emphasizes technical details for developers.

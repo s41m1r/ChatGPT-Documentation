@@ -1,0 +1,57 @@
+**Developer Version:**
+
+---
+
+**Graph API Overview for Developers:**
+- **Primary Function**: Programmatically manage Facebook data, including querying, posting stories, managing ads, photo uploads, etc.
+- **Conceptual Model**: 
+  - *Nodes*: Represent individual objects like Users, Pages, Groups, etc. Each node has a unique ID.
+  - *Edges*: Connections between nodes. E.g., A User node can be connected to multiple Photo nodes.
+  - *Fields*: Properties of nodes. Queries can return default fields or custom ones specified in requests.
+
+- **Technical Specifications**:
+  - **HTTP Protocol**: Adheres to HTTP/1.1; all endpoints need HTTPS. Compatible with any HTTP library, making it usable with programming languages like Python, JavaScript, etc.
+  - **Host URL**: Primary endpoint - graph.facebook.com. Exception: For video uploads, use graph-video.facebook.com.
+  - **Access Tokens**: Critical for accessing most Graph API endpoints. Enables data retrieval without compromising user passwords and identifies the app making the request.
+
+- **Querying Nodes**:
+  - Default Request: `curl -i -X GET "https://graph.facebook.com/USER-ID?access_token=ACCESS-TOKEN"`. Returns JSON with name and ID.
+  - Get Metadata (field details): Append `metadata=1` to any object ID request.
+  
+- **Special Endpoint**:
+  - `/me`: Translates to ID of the person/Page linked to the current access token.
+
+- **Edges & Field Retrieval**:
+  - Edge example: Get user photos using `curl -i -X GET "https://graph.facebook.com/USER-ID/photos?access_token=ACCESS-TOKEN"`.
+  - Custom Field Requests: Add the `fields` parameter and list the fields needed. E.g., `fields=id,name,email,picture`.
+
+- **Parameter Types**:
+  - Primitives: bool, string, int.
+  - Lists: JSON arrays: `["item1", "item2"]`.
+  - Objects: JSON objects: `{"key1": "value1", "key2": "value2"}`.
+
+- **Data Operations**:
+  - **Create/Update**: Some nodes allow field updates with POST. The API can return fields immediately after write operations.
+  - **Delete**: Typically done with a DELETE operation on the object ID. Restrictions apply based on the node.
+
+- **Webhooks**: Subscribe to changes or interactions with nodes. Reference: Webhooks documentation.
+  
+- **Versioning**:
+  - Multiple versions with quarterly releases.
+  - Specify version with "vX.Y" before the endpoint, like `graph.facebook.com/v4.0/USER-ID`.
+  - Without version number: defaults to oldest version. Always specify the version in requests.
+  
+- **Error Handling**: If a read fails (invalid field request, etc.), the API returns a standard error. Reference: Handling Errors guide.
+
+- **Further References**:
+  - **Webhooks**: For node change notifications.
+  - **Versioning guide**: Detailed version handling documentation.
+  - **Graph API Changelog**: Full version history and changes.
+
+- **Next Steps for Development**:
+  - Explore the Facebook Social Graph using the Graph Explorer tool.
+  - Begin implementation by fetching user data and understanding response structures.
+
+---
+
+This adapted version targets developers and emphasizes technical specifications and details that are critical for implementation.

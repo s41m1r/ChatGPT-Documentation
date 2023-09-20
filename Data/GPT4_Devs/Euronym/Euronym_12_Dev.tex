@@ -1,0 +1,67 @@
+### Developer Version:
+
+---
+
+# Euronym Developer Documentation
+
+### Introduction
+
+Euronym is a dynamic label placement tool tailored for multi-scale web mapping applications, concentrating predominantly on Europe. It harnesses an advanced [label placement algorithm](https://en.wikipedia.org/wiki/Automatic_label_placement) to adjust the density, selection, and size of labels conditional on the zoom level and label importance.
+
+**Technical Insight**: A glance into the algorithm can be gleaned from the visualization [here](https://eurostat.github.io/gridviz/examples/labels_.html).
+
+### API Details
+
+- **Base URL**: `https://raw.githubusercontent.com/euronym/Nuts2json/master/pub/v2`
+
+  **Alternative Deployment**: You can also self-host the data. Clone the repository and expose the `pub` folder via a web server. Modify the base URL accordingly, for example, to something like `https://www.mydomain.eu/path/to/pub/v2`.
+
+- **URL Pattern**: `/<ENCODING>/<RESOLUTION>/<GEO>.csv`
+
+  A practical instance would be: [`https://raw.githubusercontent.com/eurostat/euronym/main/pub/v2/UTF/100/LU.csv`](https://raw.githubusercontent.com/eurostat/euronym/main/pub/v2/UTF/100/LU.csv) which retrieves UTF-encoded data for a 100m/pixel resolution over Luxembourg.
+
+  **Parameters**:
+
+  - `ENCODING`: Defines data encoding (`UTF`, `ASCII`).
+  - `RESOLUTION`: Indicates resolution detail, expressed in *m/pixel* (`20`, `50`, `100`, `200`).
+  - `GEO`: Represents the geographic code. When set to `EUR`, a broader dataset is obtained.
+
+  If further parameters or clarifications are needed, feel free to access the [issues page](https://github.com/eurostat/euronym/issues/new).
+
+### Data Format
+
+The returned data will be in a CSV structure, with columns indicating:
+
+- `name`: Label text to be depicted on the map.
+- `lon` & `lat`: Geographical coordinates in ETRS89 format. Consider these equivalent to WGS84.
+- `rs` & `r1`: Control display resolution settings for labels.
+- `cc`: Country code for filtering when `GEO` is set to `EUR`.
+
+**Note**: For detailed representation settings based on `rs` and `r1`, refer to the main documentation above.
+
+### Source Data & Transformation
+
+- Euronym leans on datasets like [EuroRegionalMap](https://eurogeographics.org/maps-for-europe/euroregionalmap/) and the [European commission town names table](https://ec.europa.eu/regional_policy/en/information/maps/urban-centres-towns).
+  
+- The transformation logic can be found [here](https://github.com/eurostat/euronym/tree/main/src/), and it utilizes the [GeoTools library](https://www.geotools.org).
+
+### Dependencies & Licensing
+
+- Ensure the [EuroGeographics Open Data Licence](https://www.mapsforeurope.org/licence) terms are followed, especially when using the [EuroRegionalMap](https://eurogeographics.org/maps-for-europe/euroregionalmap/) dataset. Remember to include the **© EuroGeographics 2022** attribution.
+  
+- Code is licensed under [EUPL 1.2](https://github.com/eurostat/Nuts2json/blob/master/LICENSE).
+
+### Contributions & Support
+
+For any technical hurdles or collaborative efforts:
+
+- Raise an [issue](https://github.com/eurostat/euronym/issues/new).
+- Fork the project for enhancements.
+  
+### Disclaimer
+
+While using or modifying this tool, remain cognizant of geopolitical nuances and boundaries as specified in the main documentation.
+
+---
+
+**Remember**: The given details are vital for any developer to comprehend, implement, or modify the Euronym tool. Ensure clarity and accuracy while handling the tool and its data.

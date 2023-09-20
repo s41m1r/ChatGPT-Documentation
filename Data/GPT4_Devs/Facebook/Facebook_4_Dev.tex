@@ -1,0 +1,86 @@
+**Developer Version:**
+
+---
+
+### Facebook Graph API Developer Guide
+
+#### Introduction:
+The Graph API is Facebook's core API, facilitating data transfer into and out of the platform. It leverages HTTP/1.1 and strictly requires HTTPS for communication.
+
+#### Endpoints:
+- Main Host: `graph.facebook.com`
+- Video Uploads: `graph-video.facebook.com`
+
+#### Key Concepts:
+
+1. **Access Tokens**: 
+   - A must for almost all Graph API calls.
+   - Performs user authentication and app authorization.
+   - Further info: [Access Token Documentation](#)
+
+2. **Nodes**: 
+   - Represents objects with unique IDs. Examples: Users, Pages, Photos.
+   - Example call: 
+     ```bash
+     curl -i -X GET "https://graph.facebook.com/USER-ID?access_token=ACCESS-TOKEN"
+     ```
+   - Metadata Retrieval: Add `metadata=1` parameter.
+   
+3. **/me Node**: 
+   - Refers to authenticated user or Page's ID.
+   
+4. **Edges**: 
+   - Connections between two nodes, like User-Photo.
+   - Example call: 
+     ```bash
+     curl -i -X GET "https://graph.facebook.com/USER-ID/photos?access_token=ACCESS-TOKEN"
+     ```
+
+5. **Fields**: 
+   - Node properties.
+   - Custom selection using `fields` parameter. Example:
+     ```bash
+     curl -i -X GET "https://graph.facebook.com/USER-ID?fields=id,name,email,picture&access_token=ACCESS-TOKEN"
+     ```
+
+6. **Parameters**:
+   - Primitives: bool, string, int.
+   - List Type: `["first", "second"]`
+   - Object Type: `{"key": "value"}`
+
+7. **CRUD Operations**:
+   - Create: Use POST to add data.
+   - Read: Send GET with specific fields.
+   - Update: Use POST with new data values.
+   - Delete: DELETE operation on specific node's ID.
+   
+8. **Read-After-Write**: 
+   - Instantly read data after publishing or updating.
+   - Default return is object ID unless fields specified.
+   - Example call: 
+     ```bash
+     curl -i - X POST "https://graph.facebook.com/PAGE-ID/feed?message=Hello&fields=created_time,from,id,message&access_token=ACCESS-TOKEN"
+     ```
+
+9. **Errors**: 
+   - Handled with standard responses.
+   - See: [Handling Errors Guide](#)
+
+10. **Webhooks**:
+   - Subscription-based node change notifications.
+   
+11. **API Versions**: 
+   - Quarterly releases.
+   - Specify using "v" + version number. E.g., `v4.0`.
+   - Default: Oldest version. Recommendation: Always specify.
+   - Details: [Versioning Guide](#) & [Graph API Changelog](#)
+
+#### Tools and SDKs:
+Harness the power of the Graph API across platforms and interfaces using Facebook's suite of SDKs, APIs, and tools.
+
+#### Dive Deeper:
+Start experimenting with the Graph API using the Graph Explorer tool for practical understanding. Explore real-time requests and fetch data from the Facebook Social Graph. 
+
+---
+
+*Note: The above content is tailored for developers, emphasizing technical aspects and actionable code examples.

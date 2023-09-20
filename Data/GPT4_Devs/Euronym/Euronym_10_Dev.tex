@@ -1,0 +1,77 @@
+Based on the provided structure and documentation, here's an adaptation for a developer audience:
+
+---
+
+### Euronym Developer Documentation
+
+Euronym is a place name labeling solution tailored for multi-scale web mapping applications, majorly focusing on Europe. This documentation aims to provide developers with a comprehensive understanding of Euronym's underlying algorithms, data structures, and methods to ensure effective implementation or modification.
+
+#### Overview:
+Euronym employs an advanced [label placement algorithm](https://en.wikipedia.org/wiki/Automatic_label_placement) which dynamically alters the density, selection, and size of place labels based on the user's zoom level and the label's significance.
+
+##### Dynamic Label Adaptation:
+View the dynamic change in label density and size with changing zoom levels [here](https://eurostat.github.io/gridviz/examples/labels_.html).
+
+#### API Specifications:
+
+**Base URL**: 
+`https://raw.githubusercontent.com/euronym/Nuts2json/master/pub/v2`
+
+Developers can also set up their [own deployment](#own-deployment) and define their own base URL.
+
+**URL Structure**: 
+`/<ENCODING>/<RESOLUTION>/<GEO>.csv`
+
+Example:
+[`https://raw.githubusercontent.com/eurostat/euronym/main/pub/v2/UTF/100/LU.csv`](https://raw.githubusercontent.com/eurostat/euronym/main/pub/v2/UTF/100/LU.csv)
+
+##### Parameters:
+
+| Parameter | Values | Details |
+| ------------- | ------------- |-------------|
+| `ENCODING` | `UTF` `ASCII` | Encoding type; default is `UTF`. |
+| `RESOLUTION` | `20` `50` `100` `200` | Zoom level for visualization (*m/pixel*). Lower values increase label density and file size. |
+| `GEO` | Various GEO codes, like [here](https://github.com/eurostat/euronym/tree/main/pub/v2/UTF/20). `EUR` fetches the entire dataset. | Geographic entity code. |
+
+For deeper API parameter exploration or contributions, please raise an [issue here](https://github.com/eurostat/euronym/issues/new).
+
+#### Data Format:
+
+The data returned is in CSV format with these columns:
+
+| Column | Description |
+| ------------- | ------------- |
+| `name` | Text of the place name for map rendering. |
+| `lon` | Longitude in ETRS89 ([EPSG 4258](https://spatialreference.org/ref/epsg/etrs89/)). |
+| `lat` | Latitude in ETRS89. |
+| `rs` & `r1` | Resolution thresholds to determine label visibility and exaggeration respectively. |
+| `cc` | Country code when `GEO` is `EUR` for filtering. |
+
+#### Dependencies:
+
+Euronym's label generation process is dependent on:
+
+- [EuroRegionalMap](https://eurogeographics.org/maps-for-europe/euroregionalmap/)
+- [European commission town names table](https://ec.europa.eu/regional_policy/en/information/maps/urban-centres-towns)
+
+Transformation logic can be found [here](https://github.com/eurostat/euronym/tree/main/src/) which utilizes the [GeoTools library](https://www.geotools.org).
+
+#### Self-hosting:
+
+For a self-contained deployment:
+
+1. Clone the repository: `git clone <repo-url>`
+2. Deploy the `pub` folder on your web server.
+3. Access the service using your base URL like `https://www.mydomain.eu/path/to/pub/v2`.
+
+#### Additional Information:
+
+- **Main Contributors**: [jgaffuri](https://github.com/jgaffuri)
+- **Current Version**: 2
+- **License**: [EuroGeographics Open Data Licence](https://www.mapsforeurope.org/licence) for data; [EUPL 1.2](https://github.com/eurostat/Nuts2json/blob/master/LICENSE) for the code.
+
+For contributions, technical queries, or feedback, kindly create an [issue](https://github.com/eurostat/euronym/issues/new).
+
+---
+
+Note: This documentation has been adapted for a developer audience and aims to highlight the technical intricacies and dependencies of the Euronym tool.
