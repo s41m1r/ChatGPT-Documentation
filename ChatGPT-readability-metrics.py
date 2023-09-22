@@ -62,7 +62,7 @@ def process(folder_path, audience):
     
 
     # Calculate average, median, and standard deviation for each metric, grouped by Project Name
-    summary = df_melted.groupby(["Project Name", "Type of test"]).agg(
+    summary = df_melted.groupby(["Type of test","Project Name"]).agg(
         Average=("output", "mean"),
         Median=("output", median),
         StdDev=("output", stdev)
